@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Лист покупок</title>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/loading-bar.min.css" rel="stylesheet" />
+    <link href="Content/style.css" rel="stylesheet" />
+</head>
+<body ng-app="app">
+    <div ng-view></div>
+    <script src="Scripts/jquery-2.1.1.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular-route.js"></script>
+    <script src="Scripts/loading-bar.min.js"></script>
+    <script src="Scripts/breeze.debug.js"></script>
+    <script src="Scripts/breeze.angular.js"></script>
+    <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+
+    <script src="app/app.module.js"></script>
+    <script src="app/app.config.routes.js"></script>
+    <script src="app/personnelAccouting/personnelAccouting.controller.js"></script>
+    <!--На время разработки, конечно, удобно просто перетаскивать файлы скриптов в разметку,
+    но на практике, это даст кучу GET запросов к несжатым файлам,
+    поэтому конечно лучше положить скрипты в единый сжатый bundle, либо использовать библиотеки типа RequireJS.-->
+</body>
+</html>

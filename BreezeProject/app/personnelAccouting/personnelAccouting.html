@@ -1,0 +1,83 @@
+﻿<div class="container" ng-controller="PersonnelAccountingController as vm">
+    <nav class="navbar navbar-default">
+        <ul class="navbar-nav nav">
+            <li ng-if="vm.hasChanges()"><a ng-click="vm.saveChanges()"><span class="glyphicon glyphicon-thumbs-up"></span> Сохранить изменения</a></li>
+            <li ng-if="vm.hasChanges()"><a ng-click="vm.rejectChanges()"><span class="glyphicon glyphicon-thumbs-down"></span> Отменить изменения</a></li>
+            <li><a ng-click="vm.refreshData()"><span class="glyphicon glyphicon-refresh"></span> Обновить</a></li>
+        </ul>
+    </nav>
+    <h1>Список работников</h1>
+    <button class="btn bg-primary" data-toggle="modal" data-target="#birdOnGreen">Добавить ногового сотрудника</button>
+    <div ng-if="vm.departments.length>0">
+        <h5>Фильтр по отделам</h5>
+        <ul class="nav nav-pills">
+            <li ng-repeat="depart in vm.departments" ng-class="{active: vm.filterDepartment === depart}" ng-if="depart.employees.length > 0">
+                <a ng-click="vm.filterByDepartment(depart)">{{depart.name}} ({{depart.employees.length}})</a>
+            </li>
+        </ul>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Работает</th>
+                <th>Отдел</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Возраст</th>
+                <th>Зарплата</th>
+                <th>Дата начала работы</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in vm.employees | filter: vm.isItemExists | orderBy:'-isWork'">
+                <td><input type="checkbox" ng-model="item.isWork"></td>
+                <td>{{item.department.name}}</td>
+                <td>{{item.firstName}}</td>
+                <td>{{item.lastName}}</td>
+                <td>{{item.age}}</td>
+                <td>{{item.salary}}</td>
+                <td>{{item.dateToStartWork | date:'yyyy-MM-dd' }}</td>
+                <td><button class="btn btn-danger" type="button" ng-click="vm.deleteItem(item)"><span class="glyphicon glyphicon-trash"></span></button></td>
+            </tr>
+        </tbody>
+        <pagination ng-model="currentPage" total-items="vm.employees.length"
+                    max-size="maxSize"
+                    boundary-links="true">
+        </pagination>
+    </table>
+    <div class="modal fade" id="birdOnGreen" tabindex="-1" role="dialog" aria-labelledby="birdOnGreen" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body row ">
+                    <form>
+                        <h3>Добавить</h3>
+                        <div class="form-group">
+                            <label>Имя</label>
+                            <input class="form-control" ng-model="vm.newItem.firstName" placeholder="Имя" />
+                        </div>
+                        <div class="form-group">
+                            <label>Фамилия</label>
+                            <input class="form-control" ng-model="vm.newItem.lastName" placeholder="Фамилия" />
+                        </div>
+                        <div class="form-group">
+                            <label>Возраст</label>
+                            <input type="number"  min="0" max="100" class="form-control" ng-model="vm.newItem.age" placeholder="Возраст" />
+                        </div>
+                        <div class="form-group">
+                            <label>Зарплата</label>
+                            <input class="form-control" ng-model="vm.newItem.salary" placeholder="Зарплата" />
+                        </div>
+                        <div class="form-group">
+                            <label>Отдел</label>
+                            <select class="form-control" ng-model="vm.newItem.department.id" ng-options="x.name for x in vm.departments"></select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm" type="button" ng-click="vm.addNewItem()" data-dismiss="modal"><span>Добавить</span></button>
+                    <button class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
